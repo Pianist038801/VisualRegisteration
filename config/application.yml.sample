@@ -1,0 +1,25 @@
+#
+# Database Secrets
+#
+database_adapter: ''
+database_encoding: ''
+database_pool: ''
+database_name: ''
+database_username: ''
+database_password: ''
+database_host: ''
+
+#
+# Secret
+#
+secret_key_base: ''
+
+#
+# Mailer
+#
+smtp_user_name: ''
+smtp_password: ''
+smtp_domain: ''
+smtp_port: ''
+smtp_address: ''
+from_email: ''

@@ -1,0 +1,29 @@
+<select class="form-control" id="project-select" name="line[name]">
+<% Project.all.reverse.each do |project|%>
+	<option value="<%= project.id %>"><%= project.name %></option>
+<%end%>
+	
+</select>
+<script type="text/javascript">
+	$( "#project-select" ).select2({
+        placeholder: "Project(or Create New)",
+        tags: true,
+        insertTag: function(data, tag){
+          tag.text = "Add New: '" + tag.text + "'";
+          data.push(tag);
+        }
+    });
+    $("#project-select").on("select2:select", function (event) {
+        var value = $(event.currentTarget).find("option:selected").val();
+        var text = $(event.currentTarget).find("option:selected").text();
+
+        console.log(value);
+        $('.customer_id').val(value);
+        $('.project_id').val(value);
+        $('.task_id').val(value);
+         $('#add_new_project').attr("href", "/projects/new?name=" + text )
+         if (value == text) {
+            $('#add_new_project').click();
+          }
+    });
+</script>

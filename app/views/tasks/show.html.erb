@@ -1,0 +1,46 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Tasks" } %>
+  <div class="dashhead-toolbar">
+    <%= link_to '<i class="fa fa-plus"></i> New'.html_safe, '', data: {toggle: 'modal', target: '#new_task', 'new-task-url': new_task_path}, class: "btn btn-primary", title: "New" %>
+    <%= link_to '<i class="fa fa-plus"></i> Edit'.html_safe, '', data: {toggle: 'modal', target: '#edit_task', 'task-url': edit_task_path(@task.id)}, class: "btn btn-primary", title: "Edit" %>
+    <a href="<%= tasks_path %>" class="btn btn-primary">Back</a>
+  </div>
+</div>
+<hr class="m-t">
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Name:</dt>
+      <dd><%= @task.name %>
+      <dt>Project:</dt>
+      <dd><%= link_to @task.project, @task.project %>
+    </dd>
+  </div>
+</div>
+
+<div id="new_task" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<div id="edit_task" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#new_task').on('show.bs.modal', function(e) {
+      var path = $(e.relatedTarget).data('new-task-url');
+      $("#new_task .modal-content").load(path);
+    })
+  });
+  $(document).ready(function(){
+    $('#edit_task').on('show.bs.modal', function(e) {
+      var path = $(e.relatedTarget).data('task-url');
+      $("#edit_task .modal-content").load(path);
+    })
+  });
+</script>

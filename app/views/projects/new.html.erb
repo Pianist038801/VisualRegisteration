@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h4 class="modal-title">New Project</h4>
+</div>
+
+<div class="modal-body">
+  <%= render 'form', project: @project %>
+</div>
+
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary", id="create_project">Create Project</button>
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+
+<script type="text/javascript">
+  $("#create_project").click(function(){
+    $("#project_form").submit();
+  });
+</script>

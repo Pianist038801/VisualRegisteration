@@ -1,0 +1,9 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Add User" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= users_path %>" class="btn btn-primary">Back</a>
+  </div>
+</div>
+<hr class="m-t">
+
+<%= render 'form'%>

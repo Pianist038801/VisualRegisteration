@@ -1,0 +1,116 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Line" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= new_line_path %>" class="btn btn-primary"><i class="fa fa-plus"></i> New</a>
+    <a href="<%= edit_line_path(@line) %>" class="btn btn-primary"> Edit</a>
+    <a href="<%= lines_path %>" class="btn btn-primary">Back</a>
+  </div>
+</div>
+<hr class="m-t">
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @line.user_id %>
+</p>
+<%@line.items.each do |item|%>
+
+<p>
+  <strong>Poject:</strong>
+  <%= item.project.try(:name) %>
+</p>
+
+<p>
+  <strong>Task:</strong>
+  <%= item.task.try(:name) %>
+</p>
+
+<h3>Item</h3>
+<p>
+  <strong>reference_number:</strong>
+  <%= item.try(:reference_number) %>
+</p>
+
+<p>
+  <strong>PCE/M:</strong>
+  <%= item.try(:pce) %>
+</p>
+
+
+<p>
+  <strong>Amount:</strong>
+  <%= item.try(:amount) %>
+</p>
+<%end%>
+
+<%@line.hours.each do |hour|%>
+  <h3>Hour:</h3>
+  <p>
+    <strong>Hours:</strong>
+    <%= hour.try(:hours) %>
+  </p>
+
+  <p>
+    <strong>Time From:</strong>
+    <%= hour.try(:time_from) %>
+  </p>
+
+  <p>
+    <strong>Time To:</strong>
+    <%= hour.try(:time_to) %>
+  </p>
+
+  <p>
+    <strong>Amount:</strong>
+    <%= hour.try(:amount) %>
+  </p>
+
+  <p>
+    <strong>Paytype:</strong>
+    <%= hour.try(:paytype) %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= hour.try(:description) %>
+  </p>
+<%end%>
+
+<%@line.travels.each do |travel|%>
+<h3>Travel:</h3>
+<p>
+  <strong>KM:</strong>
+  <%= travel.try(:hours) %>
+</p>
+<p>
+  <strong>Location from:</strong>
+  <%= travel.try(:location_from) %>
+</p>
+
+<p>
+  <strong>Destination to:</strong>
+  <%= travel.try(:destination_to) %>
+</p>
+<%end%>
+
+<%@line.requisitions.each do |requisition|%>
+<h3>Requisition:</h3>
+<p>
+  <strong>Reference Number:</strong>
+  <%= requisition.try(:reference_number) %>
+</p>
+<p>
+  <strong>Amount:</strong>
+  <%= requisition.try(:amount) %>
+</p>
+
+<p>
+  <strong>PCE/M:</strong>
+  <%= requisition.try(:pce) %>
+</p>
+
+<%end%>
+
+<%= link_to 'Edit', edit_line_path(@line) %> |
+<%= link_to 'Back', lines_path %>

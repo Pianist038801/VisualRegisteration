@@ -1,0 +1,114 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Projects" } %>
+  <div class="dashhead-toolbar">
+    <%= link_to "<i class='fa fa-plus'></i> New".html_safe, '', data: {toggle: 'modal', target: '#new_project_patht', 'new-project-url': new_project_path}, class: "btn btn-primary" %>
+  </div>
+</div>
+<hr class="m-t">
+
+<div class="row">
+  <%= form_tag(projects_path, method: 'get', id: "registerFormValidation") do %>
+    <div class="form-group col-lg-3 col-md-4 col-sm-6">
+      <label class="control-label">
+        Project
+      </label>
+      <input type="text" class="form-control" name="name" value="<%= @name %>">
+    </div>
+    <div class="form-group col-lg-3 col-md-4 col-sm-6">
+      <label class="control-label">
+        Customer
+      </label>
+      <%= select_tag :customer_id, options_for_select(option_for_select_customer(current_company.id), @customer),{prompt: "Select Customer", class: "form-control"} %>
+    </div>
+    <div class="form-group col-lg-3 col-md-4 col-sm-6">
+      <label class="control-label">
+        Reference Number
+      </label>
+      <input type="text" class="form-control" name="reference_number" value="<%= @reference_number %>">
+    </div>
+    <div class="form-group col-lg-3 col-md-4 col-sm-6">
+      <label class="control-label hidden-xs hidden-sm">
+        <br>
+      </label>
+      <button class="btn btn-default btn-fill form-control" type="submit">
+        Search
+      </button>
+    </div>
+  <% end %>
+</div>
+<br>
+
+<div class="flextable">
+  <div class="flextable-item text-left">
+    <%= page_entries_info @projects %>
+  </div>
+  <div class="flextable-item text-right">
+    <%= paginate @projects %>
+  </div>
+</div>
+
+<div class="table-full">
+  <div class="table-responsive">
+    <table class="table table-hover footable" data-sort="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th data-hide="phone">Reference Number</th>
+          <th>Customer</th>
+          <th data-hide="all">Planned Hours</th>
+          <th data-hide="all">Billable</th>
+          <th data-hide="all">Active</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @projects.each do |project| %>
+        <tr>
+          <td valign="middle"><%= project.id %></td>
+          <td valign="middle"><a href="<%= project_path(project) %>"><%= project.name %></a></td>
+          <td valign="middle"><%= project.reference_number %></td>
+          <td valign="middle"><%= link_to project.customer, project.customer %></td>
+          <td valign="middle"><%= project.planned_hours %></td>
+          <td valign="middle"><%= project.billable %></td>
+          <td valign="middle"><%= project.active %></td>
+          <td valign="middle">
+            <%= link_to '<span class="icon icon-pencil"></span>'.html_safe, '', data: {toggle: 'modal', target: '#edit_project', 'edit-project-url': edit_project_path(project.id)}, class: "btn btn-xs btn-primary", title: "Edit" %>
+            <a href="<%= project_path(project) %>" class="btn btn-xs btn-danger" title="Remove" data-toggle="tooltip" data-method="delete" data-confirm="Are You Sure?">
+              <span class="icon icon-erase"></span>
+            </a>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="new_project" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<div id="edit_project" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'footable' %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#new_project').on('show.bs.modal', function(e) {
+      var path = $(e.relatedTarget).data('new-project-url');
+      $("#new_project .modal-content").load(path);
+    })
+  });
+  $(document).ready(function(){
+    $('#edit_project').on('show.bs.modal', function(e) {
+      var path = $(e.relatedTarget).data('edit-project-url');
+      $("#edit_project .modal-content").load(path);
+    })
+  });
+</script>

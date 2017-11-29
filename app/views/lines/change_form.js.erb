@@ -1,0 +1,43 @@
+console.log("change_form.js.erb")
+$("#<%= params[:span_id] %>").replaceWith('<%= j render "#{params[:partial_name]}", f: params[:f]%>')
+
+$('.time').datetimepicker({
+  format: 'HH:mm'
+});
+$('.datepicker').datetimepicker();
+$(function(){
+  $(document).on('dp.change', 'input#time_to_input', function() {
+     var time_from = $("input#time_from_input").val();
+     var time_to = $("input#time_to_input").val();
+     var diff = ( new Date("1970-1-1 " + time_to) - new Date("1970-1-1 " + time_from) ) / 1000 / 60 / 60;  
+
+     $("input#amount").val(diff)
+  });
+  $(".geocomplete_location_from").geocomplete()
+    .bind("geocode:result", function(event, result){
+      $.log("Result: " + result.formatted_address);
+    })
+    .bind("geocode:error", function(event, status){
+      $.log("ERROR: " + status);
+    })
+    .bind("geocode:multiple", function(event, results){
+      $.log("Multiple: " + results.length + " results found");
+    });      
+       
+
+  $(".geocomplete_destination_to").geocomplete()
+    .bind("geocode:result", function(event, result){
+      $.log("Result: " + result.formatted_address);
+    })
+    .bind("geocode:error", function(event, status){
+      $.log("ERROR: " + status);
+    })
+    .bind("geocode:multiple", function(event, results){
+      $.log("Multiple: " + results.length + " results found");
+    }); 
+  
+});
+$( ".task-select-supplier" ).select2({
+  placeholder: "Task(or Create New)"
+});
+$("#create-line-form").validationEngine();

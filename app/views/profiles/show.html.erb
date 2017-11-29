@@ -1,0 +1,31 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Profile" } %>
+  <div class="dashhead-toolbar">
+    <%= link_to "Edit", edit_profile_path, class: "btn btn-primary" %>
+    <% if current_user.admin? %>
+      <%= link_to "Company Settings", company_setting_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <p class="text-right">
+      
+    </p>
+</div>
+<hr class="m-t">
+
+<div class="row">
+  <div class="col-md-3">
+    <%= image_tag current_user.image.url(:medium), class: 'image image-responsive' %>
+  </div>
+  <div class="col-md-9">
+    <dl class="dl-horizontal">
+      <dt>Company:</dt>
+      <dd><%= current_company.name %>
+      <dt>Name:</dt>
+      <dd><%= current_user.name %>
+      <dt>Email:</dt>
+      <dd><%= current_user.email %>
+      <dt>Telephone:</dt>
+      <dd><%= current_user.telephone %>
+    </dd>
+  </div>
+</div>

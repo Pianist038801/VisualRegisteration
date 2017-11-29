@@ -1,0 +1,100 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Customers" } %>
+  <div class="dashhead-toolbar">
+    <%= link_to "<i class='fa fa-plus'></i> New".html_safe, '', data: {toggle: 'modal', target: '#new_customer', 'new-customer-url': new_customer_path}, class: "btn btn-primary"%>
+  </div>
+</div>
+<hr class="m-t">
+
+<div class="row">
+  <%= form_tag(customers_path, method: 'get', id: "registerFormValidation") do %>
+    <div class="form-group col-md-4 col-sm-6">
+      <label class="control-label">
+        Name
+      </label>
+      <input type="text" class="form-control" name="name" value="<%= @name %>">
+    </div>
+    <div class="form-group col-md-4 col-sm-6">
+      <label class="control-label">
+        Reference Number
+      </label>
+      <input type="text" class="form-control" name="reference_number" value="<%= @reference_number %>">
+    </div>
+    <div class="form-group col-md-4 col-sm-6">
+      <label class="control-label hidden-xs hidden-sm">
+        <br>
+      </label>
+      <button class="btn btn-default btn-fill form-control" type="submit">
+        Search
+      </button>
+    </div>
+  <% end %>
+</div>
+<br>
+
+<div class="flextable">
+  <div class="flextable-item text-left">
+    <%= page_entries_info @customers %>
+  </div>
+  <div class="flextable-item text-right">
+    <%= paginate @customers %>
+  </div>
+</div>
+
+<div class="table-full">
+  <div class="table-responsive">
+    <table class="table table-hover footable" data-sort="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th data-hide="phone">Reference Number</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @customers.each do |customer| %>
+        <tr>
+          <td valign="middle"><%= customer.id %></td>
+          <td valign="middle"><a href="<%= customer_path(customer) %>"><%= customer.name %></a></td>
+          <td valign="middle"><%= customer.reference_number %></td>
+          <td valign="middle">
+            <%= link_to '<span class="icon icon-pencil"></span>'.html_safe, '', data: {toggle: 'modal', target: '#edit_customer', 'customer-url': edit_customer_path(customer.id)}, class: "btn btn-xs btn-primary", title: "Edit" %>
+            <a href="<%= customer_path(customer) %>" class="btn btn-xs btn-danger" title="Remove" data-toggle="tooltip" data-method="delete" data-confirm="Are You Sure?">
+              <span class="icon icon-erase"></span>
+            </a>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="new_customer" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<div id="edit_customer" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'footable' %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#new_customer').on('show.bs.modal', function(e) {
+      var path = $(e.relatedTarget).data('new-customer-url');
+      $("#new_customer .modal-content").load(path);
+    })
+  });
+  $(document).ready(function(){
+    $('#edit_customer').on('show.bs.modal', function(e) {
+      var path = $(e.relatedTarget).data('customer-url');
+      $("#edit_customer .modal-content").load(path);
+    })
+  });
+</script>

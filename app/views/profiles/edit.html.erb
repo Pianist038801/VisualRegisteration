@@ -1,0 +1,63 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Profile Edit" } %>
+</div>
+<hr class="m-t">
+
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <%= form_for(current_user, url: update_profile_path) do |f| %>
+      <div class="form-group <%= error?(current_user.errors, :company_name) %>">
+        <%= f.text_field :company_name, placeholder: "Company Name", class: "form-control" %>
+        <%= print_error(current_user.errors, :company_name) %>
+      </div>
+
+      <div class="form-group <%= error?(current_user.errors, :name) %>">
+        <%= f.text_field :name, autofocus: true, placeholder: "Full Name", class: "form-control" %>
+        <%= print_error(current_user.errors, :name) %>
+      </div>
+
+      <div class="form-group <%= error?(current_user.errors, :email) %>">
+        <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
+        <%= print_error(current_user.errors, :email) %>
+      </div>
+
+      <div class="form-group <%= error?(current_user.errors, :telephone) %>">
+        <%= f.text_field :telephone, autofocus: true, placeholder: "Telephone", class: "form-control" %>
+        <%= print_error(current_user.errors, :telephone) %>
+      </div>
+
+      <div class="form-group <%= error?(current_user.errors, :image) %>">
+        <%= f.file_field :image, accept: 'image/png, image/jpeg, image/svg, image/gif', class: "form-control" %>
+        <%= print_error(current_user.errors, :image) %>
+      </div>
+
+      <div class="form-group <%= error?(current_user.errors, :current_password) %>">
+        <%= f.password_field :current_password, autocomplete: "off", placeholder: "Type Existing password to change", class: "form-control" %>
+        <%= print_error(current_user.errors, :current_password) %>
+      </div>
+
+      <div class="form-group <%= error?(current_user.errors, :password) %>">
+        <%= f.password_field :password, autocomplete: "off", placeholder: "New Password", class: "form-control" %>
+        <%= print_error(current_user.errors, :password) %>
+      </div>
+
+      <div class="form-group <%= error?(current_user.errors, :password_confirmation) %>">
+        <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm New Password", class: "form-control" %>
+        <%= print_error(current_user.errors, :password_confirmation) %>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.submit "Save", class: "btn btn-primary col-sm-12" %>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= link_to "Back", profile_path, class: "btn btn-info col-sm-12" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

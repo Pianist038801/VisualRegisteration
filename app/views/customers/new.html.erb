@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h4 class="modal-title">New Customer</h4>
+</div>
+
+<div class="modal-body">
+  <%= render 'form', customer: @customer %>
+</div>
+
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary", id="create_customer">Create Customer</button>
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+
+<script type="text/javascript">
+  $("#create_customer").click(function(){
+    $("#customer_form").submit();
+  });
+</script>

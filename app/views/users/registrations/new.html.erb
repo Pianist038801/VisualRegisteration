@@ -1,0 +1,67 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Sign Up" } %>
+</div>
+<hr class="m-t">
+
+<div class="col-md-6 col-md-offset-3">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+    <div class="form-group <%= error?(resource.errors, :name) %>">
+      <%= f.text_field :name, autofocus: true, placeholder: "Name", class: "form-control", required: true %>
+      <%= print_error(resource.errors, :name) %>
+    </div>
+
+    <div class="form-group <%= error?(resource.errors, :email) %>">
+      <%= f.email_field :email, placeholder: "Email", class: "form-control", required: true %>
+      <%= print_error(resource.errors, :email) %>
+    </div>
+
+    <div class="form-group <%= error?(resource.errors, :password) %>">
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+      <% end %>
+      <%= f.password_field :password, autocomplete: "off", placeholder: "Password", class: "form-control", required: true %>
+      <%= print_error(resource.errors, :password) %>
+    </div>
+
+    <div class="form-group <%= error?(resource.errors, :password_confirmation) %>">
+      <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Password Confirmation", class: "form-control", required: true %>
+      <%= print_error(resource.errors, :password_confirmation) %>
+    </div>
+
+    <div class="form-group <%= error?(resource.errors, :organization_number) %>">
+      <%= f.text_field :organization_number, placeholder: "Organization Number", class: "form-control", required: true, id: "organization_number" %>
+      <%= print_error(resource.errors, :organization_number) %>
+    </div>
+
+    <div class="company_name form-group <%= error?(resource.errors, :company_name) %>">
+      <%= f.text_field :company_name, placeholder: "Company Name", class: "form-control", id: "company_name" %>
+      <%= print_error(resource.errors, :company_name) %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit "Sign Up", class: "btn btn-primary col-sm-12" %>
+    </div>
+  <% end %>
+
+  <%= render "users/shared/links" %>
+</div>
+<% content_for :javascript do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".company_name").hide();
+      $("#organization_number").change(function(){
+        $(".company_name").show();
+      });
+      $("#organization_number").on('blur', function(){
+        var number = $("#organization_number").val();
+        if(number != ''){
+          var url = "http://data.brreg.no/enhetsregisteret/enhet/" + number + ".json"
+          $.getJSON(url, function(data) {
+            $("#company_name").val(data['navn']);
+          });
+        }
+      });
+    });
+  </script>
+<% end %>

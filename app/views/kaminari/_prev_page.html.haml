@@ -1,0 +1,2 @@
+%li{ class: "page-pre #{current_page.first? ? 'disabled' : ''}" }
+  = link_to raw('<i class="fa fa-angle-left" aria-hidden="true"></i>'), (current_page.first? ? 'javascript:void(0);' : url), remote: remote

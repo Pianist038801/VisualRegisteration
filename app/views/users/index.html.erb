@@ -1,0 +1,80 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Users" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= new_user_path %>" class="btn btn-primary"><i class="fa fa-plus"></i> New</a>
+  </div>
+</div>
+<hr class="m-t">
+
+<div class="row">
+  <%= form_tag(users_path, method: 'get', id: "registerFormValidation") do %>
+    <div class="form-group col-md-4 col-sm-6">
+      <label class="control-label">
+        Name
+      </label>
+      <input type="text" class="form-control" name="name" value="<%= @name %>">
+    </div>
+    <div class="form-group col-md-4 col-sm-6">
+      <label class="control-label">
+        Email
+      </label>
+      <input type="text" class="form-control" name="email" value="<%= @email %>">
+    </div>
+    <div class="form-group col-md-4 col-sm-6">
+      <label class="control-label hidden-xs hidden-sm">
+        <br>
+      </label>
+      <button class="btn btn-default btn-fill form-control" type="submit">
+        Search
+      </button>
+    </div>
+  <% end %>
+</div>
+<br>
+
+<div class="flextable">
+  <div class="flextable-user text-left">
+    <%= page_entries_info @users %>
+  </div>
+  <div class="flextable-user text-right">
+    <%= paginate @users %>
+  </div>
+</div>
+
+<div class="table-full">
+  <div class="table-responsive">
+    <table class="table table-hover footable" data-sort="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th data-hide="all">Telephone</th>
+          <th data-hide="all">Admin</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+        <tr>
+          <td valign="middle"><%= user.id %></td>
+          <td valign="middle"><a href="<%= user_path(user) %>"><%= user.name %></a></td>
+          <td valign="middle"><%= user.email %></td>
+          <td valign="middle"><%= user.telephone %></td>
+          <td valign="middle"><%= user.admin %></td>
+          <td valign="middle">
+            <a href="<%= edit_user_path(user) %>" class="btn btn-xs btn-primary" title="Edit" data-toggle="tooltip">
+              <span class="icon icon-pencil"></span>
+            </a>
+            <a href="<%= user_path(user) %>" class="btn btn-xs btn-danger" title="Remove" data-toggle="tooltip" data-method="delete" data-confirm="Are You Sure?">
+              <span class="icon icon-erase"></span>
+            </a>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= javascript_include_tag 'footable' %>

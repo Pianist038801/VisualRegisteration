@@ -1,0 +1,68 @@
+/* global body padding */
+body {
+  padding-top:    20px;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-top:    50px;
+    padding-bottom: 50px;
+  }
+}
+
+
+/* global spacing overrides */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-top: 0;
+}
+hr {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.navbar-fixed-top,
+.navbar-static-top {
+  border-bottom: 0;
+}
+.line-input{padding-left: 2px !important; padding-right: 2px !important; }
+.show{display: block !important;}
+.right{float: right !important;}
+.dashhead-toolbar .input-with-icon{
+  width: 230px;
+}
+.removeIcon{
+  color: red;
+  font-size: 20px;
+  position: relative;
+  top: 5px;
+}
+
+.zeopm{
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important; 
+}
+.addNewLineBtn{
+  margin-left:15px;
+}
+.select2-selection{
+  height: 35px !important;
+  background: #434857 !important;
+}
+
+.select2-selection__rendered{
+  color: #fff !important;
+}
+.floatRight{
+  float: right;
+}
+.block {
+  display: block !important;
+}
+.content{
+  padding-left: 2px !important;
+  padding-right: 0px !important;
+}

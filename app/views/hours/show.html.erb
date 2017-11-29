@@ -1,0 +1,41 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Hour" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= new_hour_path %>" class="btn btn-primary"><i class="fa fa-plus"></i> New</a>
+    <a href="<%= edit_hour_path(@hour) %>" class="btn btn-primary"> Edit</a>
+    <a href="<%= hours_path %>" class="btn btn-primary">Back</a>
+  </div>
+</div>
+<hr class="m-t">
+
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Hours:</dt>
+      <dd><%= @hour.hours.strftime('%H:%M') %>
+      <dt>Description:</dt>
+      <dd><%= @hour.description %>
+      <% if @hour.project %>
+        <dt>Project:</dt>
+        <dd><a href="<%= project_path(@hour.project) %>"><%= @hour.project.name %></a>
+      <% end %>
+      <% if @hour.task %>
+        <dt>Task:</dt>
+        <dd><a href="<%= task_path(@hour.task) %>"><%= @hour.task.name %></a>
+      <% end %>
+      <% if @hour.line %>
+        <dt>Line:</dt>
+        <dd><a href="<%= line_path(@hour.line) %>"><%= @hour.line.name %></a>
+      <% end %>
+      <dt>Amount:</dt>
+      <dd><%= @hour.amount %>
+      <dt>Date:</dt>
+      <dd><%= @hour.date %>
+      <dt>Time From:</dt>
+      <dd><%= @hour.time_from %>
+      <dt>Time To:</dt>
+      <dd><%= @hour.time_to %>
+    </dd>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="field col-lg-10" id="<%= SecureRandom.hex(4) %>">
+		<div class="form-group col-lg-4 line-input">
+			<%= select_tag "item[reference_number][]", options_for_select(Company.all.map{ |c| [c.name, c.id] }), :class=>"form-control  task-select-supplier validate[required]"%>
+		</div>
+
+		<div class="form-group col-lg-3 line-input">
+			<%= text_field_tag "item[amount][]",nil, :class=>"form-control validate[required]", :placeholder => "Amount(1-500)" %>
+		</div>
+		<div class="form-group col-lg-4 line-input">
+			<%= select_tag "item[pce][]", options_for_select([["PCE" , "PCE" ],["Meter" , "Meter" ]]), :class=>"form-control validate[required]"%>
+		</div>
+		<div class="form-group col-lg-1">
+		<a href="javascript:void(0)" class="removeIcon" onclick="removelink(this)">
+	  	<span class="glyphicon glyphicon-remove"></span>
+		</a>
+	</div>
+				
+
+	
+	<br>
+</div>

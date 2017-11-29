@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <%= form_for(@hour, class: "form-horizontal") do |f| %>
+      <div class="form-group <%= error?(@hour.errors, :project_id) %>">
+        <label class="control-label">Project <star>*</star></label>
+        <%= f.select :project_id, option_for_select_project(current_company),{prompt: "Select Project"}, class: "form-control autocomplete-drop-down select2", 'data-url': "/tasks/filter?project_id=", 'data-target': 'hour_task_id', required: true %>
+        <%= print_error(@hour.errors, :project_id) %>
+      </div>
+      <div class="form-group <%= error?(@hour.errors, :task_id) %>">
+        <label class="control-label">Task <star>*</star></label>
+        <%=f.select :task_id, option_for_select_task(@hour.project_id),{prompt: "Select Task"}, class: "form-control select2", required: true %>
+        <%= print_error(@hour.errors, :task_id) %>
+      </div>
+      <div class="form-group <%= error?(@hour.errors, :date) %>">
+        <label class="control-label">Date</label>
+        <div class='input-with-icon block'>
+          <%= f.text_field :date, class: "form-control", data: {provide: "datepicker", 'date-format': "dd/mm/yyyy"} %>
+          <span class="icon icon-calendar"></span>
+        </div>
+        <%= print_error(@hour.errors, :date) %>
+      </div>
+      <div class="row">
+        <div class="form-group <%= error?(@hour.errors, :time_from) %> col-sm-6">
+          <label class="control-label">Time From</label>
+          <div class='input-with-icon block'>
+            <%= f.text_field :time_from, value: f.object.time_from.try(:strftime, '%H:%M'), class: "form-control time time_change", placeholder: "Time From" %>
+            <span class="icon icon-clock"></span>
+          </div>
+          <%= print_error(@hour.errors, :time_from) %>
+        </div>
+        <div class="form-group <%= error?(@hour.errors, :time_to) %> col-sm-6">
+          <label class="control-label">Time To</label>
+          <div class='input-with-icon block'>
+            <%= f.text_field :time_to, value: f.object.time_to.try(:strftime, '%H:%M'), class: "form-control time time_change", placeholder: "Time To" %>
+            <span class="icon icon-clock"></span>
+          </div>
+          <%= print_error(@hour.errors, :time_to) %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group <%= error?(@hour.errors, :amount) %> col-sm-6">
+          <label class="control-label">Amount </label>
+          <%= f.number_field :amount, placeholder: "Amount", class: "form-control", disabled: true %>
+          <%= print_error(@hour.errors, :amount) %>
+        </div>
+        <div class="form-group <%= error?(@hour.errors, :pay_type_id) %> col-sm-6">
+          <label class="control-label">Pay Type <star>*</star></label>
+          <%=f.select :pay_type_id, option_for_select_pay_type,{prompt: "Select Pay Type"}, class: "form-control", required: true %>
+          <%= print_error(@hour.errors, :pay_type_id) %>
+        </div>
+      </div>
+      <div class="form-group <%= error?(@hour.errors, :description) %>">
+        <label class="control-label">Description <star>*</star></label>
+        <%= f.text_area :description, placeholder: "Description", class: "form-control", required: true %>
+        <%= print_error(@hour.errors, :description) %>
+      </div>
+      <div class="form-group">
+        <%= f.submit "Save", class: "btn btn-primary col-sm-12" %>
+      </div>
+    <% end %>
+  </div>
+</div>

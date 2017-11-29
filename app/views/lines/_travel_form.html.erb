@@ -1,0 +1,27 @@
+<div class="field col-lg-10" id="<%= SecureRandom.hex(4) %>">
+	<div class="form-group col-lg-3 line-input">
+		<div class='input-group date' >
+			<%= text_field_tag "travel[date][]",nil, :class=>"form-control datetimepicker1 datepicker validate[required]", :placeholder => "Hours" %>
+			<span class="input-group-addon">
+			   <span class="glyphicon glyphicon-calendar"></span>
+			 </span>
+	  </div>
+	</div>
+	
+	<div class="form-group col-lg-3 line-input">
+		<%= text_field_tag "travel[location_from][]",nil, :id=>"geocomplete_location_from", :class=>"form-control validate[required] geocomplete_location_from", :placeholder => "Location From" %>
+		 <!-- <input id="find" type="button" value="find" /> -->
+	</div>
+
+	<div class="form-group col-lg-3 line-input">
+		<%= text_field_tag "travel[destination_to][]",nil, :id=>"geocomplete_destination_to", :class=>"form-control validate[required] geocomplete_destination_to", :placeholder => "Destination To" %>
+	</div>
+		<div class="form-group col-lg-2 line-input">
+		<%= text_field_tag "travel[amount][]",nil, :class=>"form-control validate[required]", :placeholder => "Amount KM" %>
+	</div>	
+	<div class="col-lg-1 form-group">
+		<a href="javascript:void(0)" class="removeIcon" onclick="removelink(this)">
+	  <span class="glyphicon glyphicon-remove"></span>
+	</a>
+	</div>
+</div>

@@ -1,0 +1,76 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Hours" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= new_hour_path %>" class="btn btn-primary"><i class="fa fa-plus"></i> New</a>
+  </div>
+</div>
+<hr class="m-t">
+
+<div class="row statcards m-t-md m-b text-xs-center text-md-left">
+  <div class="col-xs-6 col-sm-6 statcard m-b">
+    <h3 class="statcard-number text-success">
+      0.0
+    </h3>
+    <span class="statcard-desc">Amount of hours in time bank</span>
+    <span class="statcard-desc"> for leave with pay</span>
+  </div>
+  <div class="col-xs-6 col-sm-6 statcard m-b">
+    <h3 class="statcard-number text-success">
+      <%= @vacation_day %>
+    </h3>
+    <span class="statcard-desc">Vacation days left</span>
+  </div>
+</div>
+<hr class="m-t">
+
+<div class="row">
+  <%= form_tag(hours_path, method: 'get', id: "registerFormValidation") do %>
+    <div class="form-group col-md-3 col-sm-6">
+      <label class="control-label">
+        Date From
+      </label>
+      <div class='input-with-icon block'>
+        <%= text_field_tag :date_from, params[:date_from], class: "form-control", data: {provide: "datepicker", 'date-format': "dd/mm/yyyy"} %>
+        <span class="icon icon-calendar"></span>
+      </div>
+    </div>
+    <div class="form-group col-md-3 col-sm-6">
+      <label class="control-label">
+        Date To
+      </label>
+      <div class='input-with-icon block'>
+        <%= text_field_tag :date_to, params[:date_to], class: "form-control", data: {provide: "datepicker", 'date-format': "dd/mm/yyyy"} %>
+        <span class="icon icon-calendar"></span>
+      </div>
+    </div>
+    <div class="form-group col-md-3 col-sm-6">
+      <label class="control-label">
+        User
+      </label>
+      <%=select_tag :user_id, options_for_select(option_for_select_user(current_company.id), @user), prompt: "Select User", class: "form-control select2" %>
+    </div>
+    <div class="form-group col-md-3 col-sm-6">
+      <label class="control-label hidden-xs hidden-sm">
+        <br>
+      </label>
+      <button class="btn btn-default btn-fill form-control" type="submit">
+        Search
+      </button>
+    </div>
+  <% end %>
+</div>
+
+<hr class="m-t">
+
+<div class="flextable">
+  <div class="flextable-item text-left">
+    <%= page_entries_info @hours %>
+  </div>
+  <div class="flextable-item text-right">
+    <%= paginate @hours %>
+  </div>
+</div>
+
+<%= render 'table', hours: @hours %>
+
+<%= javascript_include_tag 'footable' %>

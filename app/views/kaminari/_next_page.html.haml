@@ -1,0 +1,2 @@
+%li{ class: "page-next #{current_page.last? ? 'disabled' : ''}" }
+  = link_to raw('<i class="fa fa-angle-right" aria-hidden="true"></i>'), (current_page.last? ? 'javascript:void(0);' : url), remote: remote

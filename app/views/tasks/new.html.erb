@@ -1,0 +1,30 @@
+<<<<<<< HEAD
+<div class="modal-header">
+  <h4 class="modal-title">New Task</h4>
+</div>
+
+<div class="modal-body">
+  <%= render 'form', task: @task %>
+</div>
+
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary", id="create_task">Create Task</button>
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+
+<script type="text/javascript">
+  $("#create_task").click(function(){
+    $("#task_form").submit();
+  });
+</script>
+=======
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "New Task" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= customers_path %>" class="btn btn-primary">Back</a>
+  </div>
+</div>
+<hr class="m-t">
+
+<%= render 'form', task: @task %>
+>>>>>>> d036ff8ae2251bf23c9cfc44f06c174f86786e13

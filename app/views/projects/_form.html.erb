@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <%= form_for(@project, html: {class: "form-horizontal", id: "project_form"}) do |f| %>
+      <div class="form-group <%= error?(@project.errors, :name) %>">
+        <label class="control-label">Name<star>*</star></label>
+        <%= f.text_field :name, placeholder: "Name", class: "form-control", required: true %>
+        <%= print_error(@project.errors, :name) %>
+      </div>
+      <div class="form-group <%= error?(@project.errors, :reference_number) %>">
+        <label class="control-label">Reference Number</label>
+        <%= f.text_field :reference_number, placeholder: "Reference Number", class: "form-control"%>
+        <%= print_error(@project.errors, :reference_number) %>
+      </div>
+      <div class="form-group <%= error?(@project.errors, :planned_hours) %>">
+        <label class="control-label">Planned Hours<star>*</star></label>
+        <%= f.text_field :planned_hours, placeholder: "Planned Hours", class: "form-control time", required: true %>
+        <%= print_error(@project.errors, :planned_hours) %>
+      </div>
+      <div class="form-group <%= error?(@project.errors, :customer_id) %>">
+        <label class="control-label">Customer<star>*</star></label>
+        <%= f.select :customer_id, option_for_select_customer(current_company.id), {prompt: "Customer"}, required: true, class: "form-control" %>
+        <%= print_error(@project.errors, :customer_id) %>
+      </div>
+      <div class="form-group col-sm-8 <%= error?(@project.errors, :billable) %>">
+        <label class="control-label">Billable</label>
+        <%= f.check_box :billable, "data-toggle": "checkbox" %>
+        <%= print_error(@project.errors, :billable) %>
+      </div>
+      <div class="form-group col-sm-4 <%= error?(@project.errors, :active) %>">
+        <label class="control-label">Active</label>
+        <%= f.check_box :active, "data-toggle": "checkbox" %>
+        <%= print_error(@project.errors, :active) %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $('.time').datetimepicker({
+      format: 'HH:mm'
+    });
+  });
+</script>

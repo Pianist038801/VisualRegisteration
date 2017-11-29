@@ -1,0 +1,31 @@
+<div class="row">
+<% just_a_counter = 0 %>
+
+	<%= f.fields_for :requisitions do |requisition_form| %>
+		<% just_a_counter += 1 %>
+  		S/No : <%= just_a_counter %>	
+    <%= requisition_form.hidden_field :user_id , class: "requisition_customer_id"%>
+	<%= requisition_form.hidden_field :project_id , class: "requisition_project_id"%>
+	<%= requisition_form.hidden_field :task_id , class: "requisition_task_id"%>	
+	<div class="form-group col-lg-2">
+		<%= select_tag 'select_controller', options_for_select([["Item" , "Item" ],["Hour" , "Hour" ],["Travel" , "Travel" ],["Requisition" , "Requisition" ]] , selected: "Requisition"),:class =>"form-control select_controller", id: just_a_counter %>
+	</div>
+
+		<div class="form-group col-lg-4">
+		<%=requisition_form.select :reference_number, Company.all.map{ |c| [c.name, c.id] },{}, :class=>"form-control", :id=> "requisition-select-supplier"%>
+			<%#= requisition_form.text_field :reference_number, :class=>"form-control", :placeholder => "Name/reference_number/supplier", :id=> "requisition-select-supplier" %>
+		</div>
+		
+		<div class="form-group col-lg-3">
+			<%= requisition_form.text_field :amount, :class=>"form-control", :placeholder => "Amount" %>
+		</div>
+
+		<div class="form-group col-lg-3">
+			<%=requisition_form.select :pce, [["PCE" , "PCE" ],["Meter" , "Meter" ]] ,{}, :class=>"form-control"%>
+		</div>
+		<div class="form-group col-lg-12">
+			<%= requisition_form.link_to_remove "Remove this Requisition", class: 'right', id: "remove_requisition_#{just_a_counter}" %>
+		</div> 
+								
+<% end %>
+</div>

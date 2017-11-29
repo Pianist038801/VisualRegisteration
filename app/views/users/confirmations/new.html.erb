@@ -1,0 +1,20 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Resend confirmation instructions" } %>
+</div>
+<hr class="m-t">
+
+<div class="col-md-6 col-md-offset-3">
+  <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+
+    <div class="form-group <%= error?(resource.errors, :email) %>">
+      <%= f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), placeholder: "Email", class: "form-control" %>
+      <%= print_error(resource.errors, :email) %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit "Resend confirmation instructions", class: "btn btn-primary col-sm-12" %>
+    </div>
+  <% end %>
+
+  <%= render "users/shared/links" %>
+</div>

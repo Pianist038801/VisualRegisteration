@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <%= form_for(@item, html: {class: "form-horizontal"}) do |f| %>
+      <div class="form-group <%= error?(@item.errors, :name) %>">
+        <label class="control-label">Name<star>*</star></label>
+        <%= f.text_field :name, placeholder: "Name", class: "form-control", required: true %>
+        <%= print_error(@item.errors, :name) %>
+      </div>
+      <div class="form-group <%= error?(@item.errors, :supplier) %>">
+        <label class="control-label">Supplier<star>*</star></label>
+        <%= f.text_field :supplier, placeholder: "Supplier", class: "form-control", required: true %>
+        <%= print_error(@item.errors, :supplier) %>
+      </div>
+      <div class="form-group <%= error?(@item.errors, :reference_number) %>">
+        <label class="control-label">Reference Number</label>
+        <%= f.text_field :reference_number, placeholder: "Reference Number", class: "form-control"%>
+        <%= print_error(@item.errors, :reference_number) %>
+      </div>
+      <div class="form-group">
+        <%= f.submit "Save", class: "btn btn-primary col-sm-12" %>
+      </div>
+    <% end %>
+  </div>
+</div>

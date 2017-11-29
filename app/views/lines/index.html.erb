@@ -1,0 +1,42 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Lines" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= new_line_path %>" class="btn btn-primary"><i class="fa fa-plus"></i> New</a>
+  </div>
+</div>
+<hr class="m-t">
+
+
+<div class="table-full">
+  <div class="table-responsive">
+    <table id="hours_table" class="footable table table-hover" data-filtering="true">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Name</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @lines.each do |line| %>
+          <tr>
+            <td valign="middle">
+              <a href="<%= line_path(line) %>"><%= line.id %></a>
+            </td>
+            <td valign="middle"><%= line.user.try(:name) %></td>
+            <td valign="middle"><%= line.name %></td>
+            <td valign="middle">
+              <a href="<%= edit_line_path(line) %>" class="btn btn-xs btn-primary" title="Edit" data-toggle="tooltip">
+                <span class="icon icon-pencil"></span>
+              </a>
+              <a href="<%= line_path(line) %>" class="btn btn-xs btn-danger" title="Remove" data-toggle="tooltip" data-method="delete" data-confirm="Are you sure?">
+                <span class="icon icon-erase"></span>
+              </a>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

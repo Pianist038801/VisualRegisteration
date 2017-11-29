@@ -1,0 +1,33 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Company Settings" } %>
+</div>
+<hr class="m-t">
+
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <%= form_tag(update_company_setting_path, method: 'patch', class: "form-horizontal") do %>
+      <% COMPANY_SETTING_CODES.each_with_index do | code, index | %>
+        <div class="form-group">
+          <label class="col-sm-3 control-label"> <%= code[1] %></label>
+          <div class="col-sm-8">
+            <%= hidden_field_tag "settings[#{index}][item]", code[0] %>
+            <%= text_field_tag "settings[#{index}][value]", @settings[code[0]], class: "form-control" %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= submit_tag "Save", class: "btn btn-primary col-sm-11" %>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= link_to "Back", profile_path, class: "btn btn-info col-sm-11" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

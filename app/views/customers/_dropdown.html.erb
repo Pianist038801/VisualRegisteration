@@ -1,0 +1,27 @@
+<select class="form-control" id="customer-select" name="line[name]">
+<% Customer.all.reverse.each do |customer|%>
+	<option value="<%= customer.id %>"><%= customer.name %></option>
+<%end%>
+	
+</select>
+<script type="text/javascript">
+	$( "#customer-select" ).select2({
+        tags: true,
+        insertTag: function(data, tag){
+          tag.text = "Add New: '" + tag.text + "'";
+          data.push(tag);
+        }
+    });
+    $("#customer-select").on("select2:select", function (event) {
+        var value = $(event.currentTarget).find("option:selected").val();
+        var text = $(event.currentTarget).find("option:selected").text();
+        console.log(value);
+        $('.customer_id').val(value);
+        $('.project_id').val(value);
+        $('.task_id').val(value);
+        $('#add_new_customer').attr("href", "/customers/new?name=" + text )
+        if (value == text) {
+          $('#add_new_customer').click();
+        }
+      });
+</script>

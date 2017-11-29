@@ -1,0 +1,9 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Editing Line" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= lines_path %>" class="btn btn-primary">Back</a>
+  </div>
+</div>
+<hr class="m-t">
+
+<%= render 'form', line: @line %>

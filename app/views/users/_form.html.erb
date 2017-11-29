@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <%= form_for(@user, html: {class: "form-horizontal"}) do |f| %>
+      <div class="form-group <%= error?(@user.errors, :name) %>">
+        <label class="control-label">Name<star>*</star></label>
+        <%= f.text_field :name, placeholder: "Name", class: "form-control", required: true %>
+        <%= print_error(@user.errors, :name) %>
+      </div>
+      <div class="form-group <%= error?(@user.errors, :email) %>">
+        <label class="control-label">Email<star>*</star></label>
+        <%= f.text_field :email, placeholder: "email", class: "form-control", required: true %>
+        <%= print_error(@user.errors, :email) %>
+      </div>
+      <% if f.object.new_record? %>
+        <div class="form-group <%= error?(@user.errors, :password) %>">
+          <label class="control-label">Password</label>
+          <%= f.password_field :password, placeholder: "Password", class: "form-control", required: true %>
+          <%= print_error(@user.errors, :password) %>
+        </div>
+        <div class="form-group <%= error?(@user.errors, :password_confirmation) %>">
+          <label class="control-label">Confirm Password</label>
+          <%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "form-control", required: true %>
+          <%= print_error(@user.errors, :password_confirmation) %>
+        </div>
+      <% end %>
+      <div class="form-group <%= error?(@user.errors, :telephone) %>">
+        <label class="control-label">Telephone</label>
+        <%= f.text_field :telephone, placeholder: "Telephone", class: "form-control", required: true %>
+        <%= print_error(@user.errors, :telephone) %>
+      </div>
+      <div class="form-group <%= error?(@user.errors, :image) %>">
+        <label class="control-label">Image</label>
+        <%= f.file_field :image, accept: 'image/png, image/jpeg, image/svg, image/gif', name: "employee[avatar]", class: "fileinputtag", class: "form-control"%>
+        <%= print_error(@user.errors, :image) %>
+      </div>
+      <div class="form-group <%= error?(@user.errors, :admin) %>">
+        <label class="control-label">Admin</label>
+        <%= f.check_box :admin, "data-toggle": "checkbox" %>
+        <%= print_error(@user.errors, :admin) %>
+      </div>
+      <div class="form-group">
+        <%= f.submit "Save", class: "btn btn-primary col-sm-12" %>
+      </div>
+    <% end %>
+  </div>
+</div>

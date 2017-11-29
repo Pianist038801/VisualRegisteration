@@ -1,0 +1,150 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Dashboard" } %>
+
+  <%= form_tag(dashboard_path, method: 'get', id: 'date_filter_form') do %>
+    <div class="dashhead-toolbar">
+      <div class="input-with-icon dashhead-toolbar-item">
+        <% if @view == 'month' %>
+          <input name="month" type="text" value="<%= @start_date.strftime('%B-%Y') %>" class="form-control" id="monthlyDatePicker">
+        <% else %>
+          <div class="input-group input-daterange">
+            <input type="text" id="start_date" class="form-control weeklyDatePicker" value="<%= @start_date.strftime('%m/%d/%Y') %>" name="start_date">
+            <div class="input-group-addon">to</div>
+            <input type="text" id='end_date' class="form-control weeklyDatePicker" value="<%= @end_date.strftime('%m/%d/%Y') %>" name="end_date">
+          </div>
+        <% end %>
+        <input type="hidden" name="view", value="<%= @view %>">
+        <span class="icon icon-calendar"></span>
+      </div>
+      <span class="dashhead-toolbar-divider hidden-xs"></span>
+      <div class="btn-group dashhead-toolbar-item btn-group-thirds">
+        <a href="<%= dashboard_path(view: 'week') %>" class="btn btn-primary-outline <%= 'active' if @view != 'month' %>">Week</a>
+        <a href="<%= dashboard_path(view: 'month') %>" class="btn btn-primary-outline <%= 'active' if @view == 'month' %>">Month</a>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<ul class="nav nav-bordered m-t m-b-0" role="tablist">
+  <li class="active" role="presentation">
+    <a href="#billing" role="tab" data-toggle="tab" aria-controls="traffic">Billing</a>
+  </li>
+  <li role="presentation">
+    <a href="#project" role="tab" data-toggle="tab" aria-controls="support">Project</a>
+  </li>
+  <li role="presentation">
+    <a href="#total" role="tab" data-toggle="tab" aria-controls="sales">Total</a>
+  </li>
+</ul>
+<hr class="m-t-0 m-b-lg">
+
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="billing">
+    <div class="row text-center m-t-md">
+      <div class="col-sm-6 m-b-md">
+        <div class="w-lg m-x-auto">
+          <canvas
+            class="ex-graph"
+            width="200" height="200"
+            data-chart="doughnut"
+            data-value="[{ value: <%= @total_hours %>, color: '#42a5f5', label: 'Total Hours' }, { value: <%= @goal_hours %>, color: '#1bc98e', label: 'Goal Hours' }]"
+            data-segment-stroke-color="#222">
+          </canvas>
+        </div>
+        <strong class="text-muted">Total</strong>
+        <h3>Total vs Goal</h3>
+      </div>
+      <div class="col-sm-6 m-b-md">
+        <div class="w-lg m-x-auto">
+          <% if @total_hours > 0 %>
+            <canvas
+              class="ex-graph"
+              width="200" height="200"
+              data-chart="doughnut"
+              data-value="[{ value: <%= @total_hours %>, color: '#42a5f5', label: 'Total Hours' }, { value: <%= @sold_hours %>, color: '#1bc98e', label: 'Sold Hours' }]"
+              data-segment-stroke-color="#222">
+            </canvas>
+          <% else %>
+          <canvas
+              class="ex-graph"
+              width="200" height="200"
+              data-chart="doughnut"
+              data-value="[{ value: 100, color: '#FF0000' }]"
+              data-segment-stroke-color="#222">
+            </canvas>
+          <% end %>
+        </div>
+        <strong class="text-muted">Sold</strong>
+        <h3>Sold vs Total</h3>
+      </div>
+    </div>
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="project">
+    <div class="ex-line-graphs m-b-md">
+      <canvas
+        class="ex-line-graph"
+        width="600" height="400"
+        data-chart="bar"
+        data-scale-line-color="transparent"
+        data-scale-grid-line-color="rgba(255,255,255,.05)"
+        data-scale-font-color="#a2a2a2"
+        data-labels="['<%= @projects.values.map { |p| p[0] }.join("', '") %>']"
+        data-value="[{ label: 'Planned Hours', data: [<%= @projects.values.map { |p| p[1] }.join(", ") %>] }, { label: 'Total hours', data: [<%= @projects.values.map { |p| p[2] }.join(", ") %>] }]">
+      </canvas>
+    </div>
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="total">
+    <div class="ex-line-graphs m-b-md">
+      <canvas
+        class="ex-line-graph"
+        width="600" height="400"
+        data-chart="line"
+        data-scale-line-color="transparent"
+        data-scale-grid-line-color="rgba(255,255,255,.05)"
+        data-scale-font-color="#a2a2a2"
+        data-labels="['<%= @totals.values.map { |m| m[0] }.join("', '") %>']"
+        data-value="[{label: 'Total Hours', color: '#42a5f5', data: [<%= @totals.values.map { |m| m[1] }.join(", ") %>]}, {label: 'Billable Hour', color: '#ffffff', data: [<%= @totals.values.map { |m| m[2] }.join(", ") %>]}, ]">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<div class="hr-divider m-t m-b">
+  <h3 class="hr-divider-content hr-divider-heading">Quick stats</h3>
+</div>
+
+<div class="row statcards m-t-md m-b text-xs-center text-md-left">
+  <div class="col-xs-6 col-sm-3 statcard m-b">
+    <h3 class="statcard-number text-success">
+      <%= current_company.users.count %>
+    </h3>
+    <span class="statcard-desc">Users</span>
+  </div>
+  <div class="col-xs-6 col-sm-3 statcard m-b">
+    <h3 class="statcard-number text-success">
+      <%= current_company.customers.count %>
+    </h3>
+    <span class="statcard-desc">Customers</span>
+  </div>
+  <div class="col-xs-6 col-sm-3 statcard m-b">
+    <h3 class="statcard-number text-success">
+      <%= current_company.projects.count %>
+    </h3>
+    <span class="statcard-desc">Projects</span>
+  </div>
+  <div class="col-xs-6 col-sm-3 statcard m-b">
+    <h3 class="statcard-number text-<%= @diff[0] == 'nagative' ? 'danger' : 'success' %>">
+      <%= "#{@total_billable_hours[0]}:#{@total_billable_hours[1].to_s.rjust(2, '0')}" %> hr
+      <small class="delta-indicator delta-<%= @diff[0] %>"><%= @diff[1] %></small>
+    </h3>
+    <span class="statcard-desc">Hours billed vs prev. <%= @view %></span>
+  </div>
+</div>
+
+<hr class="m-t-0 m-b-md">
+
+<%= render 'hours/table', hours: @hours %>
+
+<%= javascript_include_tag 'footable' %>

@@ -1,0 +1,59 @@
+<script type="text/javascript">
+$(function() {
+  $('.time').each(function() {
+    $(this).datetimepicker({
+      format: 'HH:mm'
+    });
+  });
+});
+</script>
+<% just_a_counter = 0 %>
+
+<%= f.fields_for :hours do |hour_form| %>
+	<% just_a_counter += 1 %>
+  S/No : <%= just_a_counter %>	
+   <%= hour_form.hidden_field :user_id , class: "hour_customer_id"  %>
+	<%= hour_form.hidden_field :project_id , class: "hour_project_id"  %>
+	<%= hour_form.hidden_field :task_id , class: "hour_task_id" %>
+	<div class="row">
+	<div class="form-group col-lg-2">
+		<%= select_tag 'select_controller', options_for_select([["Item" , "Item" ],["Hour" , "Hour" ],["Travel" , "Travel" ],["Requisition" , "Requisition" ]] , selected: "Hour"),:class =>"form-control select_controller", id: just_a_counter%>
+	</div>
+
+	<div class="form-group col-lg-2 line-input">
+		<%= hour_form.text_field :hours, :class=>"form-control datetimepicker1", :placeholder => "Hours" %>
+	</div>
+	<div class="form-group col-lg-2 line-input">
+		<div class='input-group date' >
+      <%= hour_form.text_field :time_from, :class=>"form-control time " , id: "time_from_input" , :placeholder => "Time From" %>
+      <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
+	</div>
+
+	<div class="form-group col-lg-2 line-input">
+		<div class='input-group date' >
+			<%= hour_form.text_field :time_to, :class=>"form-control time ", id: "time_to_input", :placeholder => "Time To" %>
+			<span class="input-group-addon">
+	        <span class="glyphicon glyphicon-calendar"></span>
+	      </span>
+		</div>
+	</div>
+		<div class="form-group col-lg-1 line-input">
+		<%= hour_form.text_field :amount, :class=>"form-control " , id: "amount", :placeholder => "Show Amount" %>
+	</div>
+
+	<div class="form-group col-lg-1 line-input">
+		<%=hour_form.select :paytype, [["Overtime" , "Overtime" ],["Vacation" , "Vacation" ]] ,{}, :class=>"form-control"%>
+	</div>
+	<div class="form-group col-lg-2 line-input">
+		<%= hour_form.text_field :description, :class=>"form-control", :placeholder => "Description" %>
+	</div>
+	</div>
+	<div class="row">
+	<div class="form-group col-lg-12">
+		<%= hour_form.link_to_remove "Remove this Hour", class: 'right  btn btn-danger', id: "remove_item_#{just_a_counter}" %>
+	</div> 
+	</div>
+<% end %>

@@ -1,0 +1,11 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Edit Hour" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= new_hour_path %>" class="btn btn-primary"><i class="fa fa-plus"></i> New</a>
+    <a href="<%= hour_path(@hour) %>" class="btn btn-primary"> Show</a>
+    <a href="<%= hours_path %>" class="btn btn-primary">Back</a>
+  </div>
+</div>
+<hr class="m-t">
+
+<%= render 'form', hour: @hour %>

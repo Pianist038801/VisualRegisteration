@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h4 class="modal-title">Editing Task</h4>
+</div>
+
+<div class="modal-body">
+  <%= render 'form', task: @task %>
+</div>
+
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary", id="update-task">Update</button>
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+
+<script type="text/javascript">
+  $("#update-task").click(function(){
+    $("#task_form").submit();
+  });
+</script>

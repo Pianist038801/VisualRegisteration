@@ -1,0 +1,99 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Tasks" } %>
+  <div class="dashhead-toolbar">
+    <%= link_to '<i class="fa fa-plus"></i> New'.html_safe, '', data: {toggle: 'modal', target: '#new_task', 'new-task-url': new_task_path}, class: "btn btn-primary", title: "New" %>
+  </div>
+</div>
+<hr class="m-t">
+
+<div class="row">
+  <%= form_tag(tasks_path, method: 'get', id: "registerFormValidation") do %>
+    <div class="form-group col-md-4 col-sm-6">
+      <label class="control-label">
+        Project
+      </label>
+      <%= select_tag :project_id, options_for_select(option_for_select_project(current_company), @project),{prompt: "Select Project", class: "form-control"} %>
+    </div>
+    <div class="form-group col-md-4 col-sm-6">
+      <label class="control-label">
+        Task
+      </label>
+      <input type="text" class="form-control" name="name" value="<%= @name %>">
+    </div>
+    <div class="form-group col-md-4 col-sm-6">
+      <label class="control-label hidden-xs hidden-sm">
+        <br>
+      </label>
+      <button class="btn btn-default btn-fill form-control" type="submit">
+        Search
+      </button>
+    </div>
+  <% end %>
+</div>
+<br>
+
+<div class="flextable">
+  <div class="flextable-item text-left">
+    <%= page_entries_info @tasks %>
+  </div>
+  <div class="flextable-item text-right">
+    <%= paginate @tasks %>
+  </div>
+</div>
+
+<div class="table-full">
+  <div class="table-responsive">
+    <table class="table table-hover" data-sort="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Project</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>
+        <tr>
+          <td valign="middle"><%= task.id %></td>
+          <td valign="middle"><a href="<%= task_path(task) %>" data-toggle="tooltip"><%= task.name %></a></td>
+          <td valign="middle"><%= task.project %></td>
+          <td valign="middle">
+            <%= link_to '<span class="icon icon-pencil"></span>'.html_safe, '', data: {toggle: 'modal', target: '#edit_task', 'task-url': edit_task_path(task.id)}, class: "btn btn-xs btn-primary", title: "Edit" %>
+            <a href="<%= task_path(task) %>" class="btn btn-xs btn-danger" title="Remove" data-toggle="tooltip" data-method="delete" data-confirm="Are you sure?">
+              <span class="icon icon-erase"></span>
+            </a>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="new_task" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<div id="edit_task" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#new_task').on('show.bs.modal', function(e) {
+      var path = $(e.relatedTarget).data('new-task-url');
+      $("#new_task .modal-content").load(path);
+    })
+  });
+  $(document).ready(function(){
+    $('#edit_task').on('show.bs.modal', function(e) {
+      var path = $(e.relatedTarget).data('task-url');
+      $("#edit_task .modal-content").load(path);
+    })
+  });
+</script>

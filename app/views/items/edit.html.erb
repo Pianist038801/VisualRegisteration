@@ -1,0 +1,9 @@
+<div class="dashhead">
+  <%= render partial: "partial/header", locals: { header: "Editing Items" } %>
+  <div class="dashhead-toolbar">
+    <a href="<%= item_path(@item) %>" class="btn btn-primary">Show</a>
+    <a href="<%= items_path %>" class="btn btn-primary">Back</a>
+  </div>
+</div>
+
+<%= render 'form', item: @item %>

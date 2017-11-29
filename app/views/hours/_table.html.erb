@@ -1,0 +1,49 @@
+<div class="table-full">
+  <div class="table-responsive">
+    <table class="table table-hover footable" data-sort="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Project</th>
+          <th data-hide="phone">Task</th>
+          <th data-hide="phone,tablet">Start Time</th>
+          <th data-hide="phone,tablet">End Time</th>
+          <th data-hide="all">Comments</th>
+          <th>Amount</th>
+          <th width="10%" data-hide="phone"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% hours.each do |hour| %>
+          <tr>
+            <td valign="middle"><a href="<%= hour_path(hour) %>"><%= hour.id %></a></td>
+            <td valign="middle"><%= hour.user.try(:name) %></td>
+            <td valign="middle">
+              <% if hour.project %>
+                <a href="<%= project_path(hour.project) %>"><%= hour.project.try(:name) %></a>
+              <% end %>
+            </td>
+            <td valign="middle">
+              <% if hour.task %>
+                <a href="<%= task_path(hour.task) %>"><%= hour.task.try(:name) %></a>
+              <% end %>
+            </td>
+            <td valign="middle"><%= hour.time_from.try(:strftime, '%H:%M') %></td>
+            <td valign="middle"><%= hour.time_to.try(:strftime, '%H:%M') %></td>
+            <td valign="middle"><%= hour.description %></td>
+            <td valign="middle"><%= hour.amount %></td>
+            <td valign="middle">
+              <a href="<%= edit_hour_path(hour) %>" class="btn btn-xs btn-primary" title="Edit" data-toggle="tooltip">
+                <span class="icon icon-pencil"></span>
+              </a>
+              <a href="<%= hour_path(hour) %>" class="btn btn-xs btn-danger" title="Remove" data-toggle="tooltip" data-method="delete" data-confirm="Are you sure?">
+                <span class="icon icon-erase"></span>
+              </a>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
